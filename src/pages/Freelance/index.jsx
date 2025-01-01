@@ -27,9 +27,9 @@ function Freelance(){
             {
                 freelanceProfiles.map((profile,index) => (
                     <Card 
-                        key={`${profile.name}-${profile.index}`}
+                        key={`${profile.name}-${index}`}
                         label={profile.jobTitle}
-                        title={profile.name}
+                        title={profile.title}
                         picture={profile.picture}
 
                     />
