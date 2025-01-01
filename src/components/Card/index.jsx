@@ -11,6 +11,10 @@ function Card({ label,title,picture }){
     )
 }
 
+Card.defaultProps = {
+    title: 'Mon Titre pa defaut'
+}
+
 Card.propTypes = {
     label: PropTypes.string,
     title: PropTypes.string.isRequired,
