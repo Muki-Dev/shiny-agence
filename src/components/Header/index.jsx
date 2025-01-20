@@ -9,17 +9,17 @@ function Header(){
     color: #8186a0;
     text-decoration: none;
     font-size: 18px;
-    {
-        (props) => props.$isFullLink && color: white; border-radius: 30px; background-color: ${colors.primary}; 
-    }
+    ${(props) =>
+    props.$isFullLink &&
+    `color: white; border-radius: 30px; background-color: ${colors.primary};`}
 `
     return(
         <nav>
             <StyledLink to="/">Accueil</StyledLink>
+            <StyledLink to="/freelance">Profils</StyledLink>
             <StyledLink to="/survey/1" $isFullLink>
-                Faire le test
+                 Faire le test
             </StyledLink>
-            <StyledLink to="/freelance">Freelance</StyledLink>
         </nav>
     )
 }
