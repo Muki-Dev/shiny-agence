@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
@@ -15,9 +15,9 @@ const QuestionTitle = styled.h2`
   text-decoration-color: ${colors.primary};
 `
 
-// const QuestionContent = styled.span`
-//   margin: 30px;
-// `
+const QuestionContent = styled.span`
+  margin: 30px;
+`
 
 const LinkWrapper = styled.div`
   padding-top: 30px;
@@ -30,6 +30,7 @@ const LinkWrapper = styled.div`
 `
 
 function Survey(){
+    const [surveyData,setSurveyData] = useState({})
     const { questionNumber } = useParams();
     const questionNumberInt = parseInt(questionNumber);
     const prevQuestionNumber = questionNumberInt === 1 ? 1 : questionNumberInt - 1;
@@ -38,7 +39,7 @@ function Survey(){
     useEffect(() => {
         fetch('http://localhost:8000/survey')
         .then((response) => response.json()
-        .then(({surveyData}) => console.log(surveyData))
+        .then(({surveyData}) => {setSurveyData(surveyData)})
         .catch((error) => console.log(error))
     
     )
@@ -46,12 +47,15 @@ function Survey(){
     return(
         <SurveyContainer>
             <QuestionTitle>Question { questionNumber }</QuestionTitle>
+            <QuestionContent>{surveyData[questionNumber]}</QuestionContent>
                 <LinkWrapper>
                     <Link to={`/survey/${prevQuestionNumber}`}>Precedent</Link>
                     {
-                        questionNumberInt === 10 ? (
+                        surveyData[questionNumberInt + 1]  ? (
+                            <Link to={`/survey/${nextQuestionNumber}`}>Suivant</Link>
+                        ):(
                             <Link to="/results">Results</Link>
-                        ):(<Link to={`/survey/${nextQuestionNumber}`}>Suivant</Link>)
+                        )
                     }
                 </LinkWrapper>
         </SurveyContainer>
