@@ -12,7 +12,7 @@ const CardLabel = styled.span`
 `
 const CardTitle = styled.span`
   color: black;
-  font-size: 22px;
+  font-size: 22px;      
   font-weight: normal;
   align-self: center;
 `
