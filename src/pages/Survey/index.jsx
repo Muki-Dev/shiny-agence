@@ -2,7 +2,7 @@ import { useEffect,useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
-// import { Loader } from "../../utils/style/Atoms";
+import { Loader } from "../../utils/style/Atoms";
 
 const SurveyContainer = styled.div`
   display: flex;
@@ -30,24 +30,29 @@ const LinkWrapper = styled.div`
 `
 
 function Survey(){
-    const [surveyData,setSurveyData] = useState({})
+    const [surveyData,setSurveyData] = useState({});
+    const [isDataLoading,setDataLoading] = useState(false);
     const { questionNumber } = useParams();
     const questionNumberInt = parseInt(questionNumber);
     const prevQuestionNumber = questionNumberInt === 1 ? 1 : questionNumberInt - 1;
     const nextQuestionNumber = questionNumberInt + 1;
    
     useEffect(() => {
+        setDataLoading(true);
         fetch('http://localhost:8000/survey')
         .then((response) => response.json()
-        .then(({surveyData}) => {setSurveyData(surveyData)})
-        .catch((error) => console.log(error))
-    
+        .then(({surveyData}) => {setSurveyData(surveyData)
+          setDataLoading(false);
+        })
     )
     },[])
     return(
         <SurveyContainer>
             <QuestionTitle>Question { questionNumber }</QuestionTitle>
-            <QuestionContent>{surveyData[questionNumber]}</QuestionContent>
+            {
+              isDataLoading ? (<Loader />) :(<QuestionContent>{surveyData[questionNumber]}</QuestionContent>)
+            }
+           
                 <LinkWrapper>
                     <Link to={`/survey/${prevQuestionNumber}`}>Precedent</Link>
                     {
