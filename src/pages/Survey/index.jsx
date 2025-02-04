@@ -46,7 +46,7 @@ function Survey(){
     //       setDataLoading(false);
     //     })
     // )
-    // },[])
+    // },[]) 
 
     useEffect(() => {
         async function fetchSurvey(){
