@@ -32,7 +32,7 @@ const LinkWrapper = styled.div`
 function Survey(){
     const [surveyData,setSurveyData] = useState({});
     const [isDataLoading,setDataLoading] = useState(false);
-    const [error,setError] = useState(null);
+    const [error,setError] = useState(false);
     const { questionNumber } = useParams();
     const questionNumberInt = parseInt(questionNumber);
     const prevQuestionNumber = questionNumberInt === 1 ? 1 : questionNumberInt - 1;
@@ -56,8 +56,8 @@ function Survey(){
             const { surveyData } = await response.json();
             setSurveyData(surveyData)
           }catch(err){
-            console.log(err)
-            setError(error)
+            console.log('===== error =====', err)
+            setError(true)
           }finally{
             setDataLoading(false)
           }
