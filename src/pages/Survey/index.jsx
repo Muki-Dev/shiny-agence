@@ -32,20 +32,43 @@ const LinkWrapper = styled.div`
 function Survey(){
     const [surveyData,setSurveyData] = useState({});
     const [isDataLoading,setDataLoading] = useState(false);
+    const [error,setError] = useState(null);
     const { questionNumber } = useParams();
     const questionNumberInt = parseInt(questionNumber);
     const prevQuestionNumber = questionNumberInt === 1 ? 1 : questionNumberInt - 1;
     const nextQuestionNumber = questionNumberInt + 1;
    
+    // useEffect(() => {
+    //     setDataLoading(true);
+    //     fetch('http://localhost:8000/survey')
+    //     .then((response) => response.json()
+    //     .then(({surveyData}) => {setSurveyData(surveyData)
+    //       setDataLoading(false);
+    //     })
+    // )
+    // },[])
+
     useEffect(() => {
-        setDataLoading(true);
-        fetch('http://localhost:8000/survey')
-        .then((response) => response.json()
-        .then(({surveyData}) => {setSurveyData(surveyData)
-          setDataLoading(false);
-        })
-    )
+        async function fetchSurvey(){
+           setDataLoading(true);
+          try{
+            const response = await  fetch('http://localhost:8000/survey');
+            const { surveyData } = await response.json();
+            setSurveyData(surveyData)
+          }catch(err){
+            console.log(err)
+            setError(error)
+          }finally{
+            setDataLoading(false)
+          }
+         
+        }
+        fetchSurvey()
     },[])
+
+    if(error){
+      return <span>Oups il y a eu un problème</span>
+    }
     return(
         <SurveyContainer>
             <QuestionTitle>Question { questionNumber }</QuestionTitle>
