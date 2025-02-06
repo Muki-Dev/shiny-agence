@@ -1,35 +1,16 @@
 import { useState,useEffect } from 'react';
 import styled from 'styled-components';
 import colors from '../../utils/style/colors';
-import DefaultPicture from '../../assets/profile.png'
 import Card from '../../components/Card';
 import { Loader } from '../../utils/style/Atoms';
- 
-const freelanceProfiles = [
-    {
-        name: 'Jane Doe',
-        jobTitle: 'Devops',
-        picture: DefaultPicture,
-    },
-    {
-        name: 'John Doe',
-        jobTitle: 'Developpeur frontend',
-        picture: DefaultPicture,
-    },
-    {
-        name: 'Jeanne Biche',
-        jobTitle: 'Développeuse Fullstack',
-        picture: DefaultPicture,
-    },
-]
 
 const CardsContainer = styled.div`
-    display: grid;
-    gap: 24;
-    grid-template-rows: 350px 350px;
-    grid-template-columns: repeat(2, 1fr);
-    align-items: center;
-    justify-content: center;
+  display: grid;
+  gap: 24px;
+  grid-template-rows: 350px 350px;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  justify-items: center;
 `
 const PageTitle = styled.h1`
     font-size: 30px;
@@ -94,11 +75,11 @@ function Freelance(){
                 ):(
                         <CardsContainer>
                         {
-                            freelanceProfiles.map((profile,index) => (
+                            freelancersList.map((profile,index) => (
                                 <Card 
                                     key={`${profile.name}-${index}`}
-                                    label={profile.jobTitle}
-                                    title={profile.title}
+                                    label={profile.job}
+                                    title={profile.name}
                                     picture={profile.picture}
             
                                 />
