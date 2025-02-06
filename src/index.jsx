@@ -10,6 +10,7 @@ import Results from './pages/Results';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { createGlobalStyle } from 'styled-components';
+import { ThemeProvider } from './utils/context';
 
 const GlobalStyle = createGlobalStyle`
   div {
@@ -21,15 +22,17 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Router>
+      <ThemeProvider>
       <GlobalStyle />
       <Header />
       <Routes>
-        <Route path="/" element={<Home />}/>
-        <Route path="/survey/:questionNumber" element={<Survey />}/>
-        <Route path="/freelance" element={<Freelance />}/>
-        <Route path="/results" element={<Results />}/>
-        <Route path='*' element={<Error />} />
+          <Route path="/" element={<Home />}/>
+          <Route path="/survey/:questionNumber" element={<Survey />}/>
+          <Route path="/freelance" element={<Freelance />}/>
+          <Route path="/results" element={<Results />}/>
+          <Route path='*' element={<Error />} />
       </Routes>
+      </ThemeProvider>
     </Router>
   </React.StrictMode>
 );
