@@ -9,14 +9,9 @@ import Freelance from './pages/Freelance';
 import Results from './pages/Results';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { createGlobalStyle } from 'styled-components';
+import GlobalStyle from './utils/style/GlobalStyle';
 import { ThemeProvider } from './utils/context';
-
-const GlobalStyle = createGlobalStyle`
-  div {
-        font-family: 'Trebuchet MS', Helvetica, sans-serif;
-    }
-`
+import Footer from './components/Footer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -32,6 +27,7 @@ root.render(
           <Route path="/results" element={<Results />}/>
           <Route path='*' element={<Error />} />
       </Routes>
+      <Footer />
       </ThemeProvider>
     </Router>
   </React.StrictMode>
