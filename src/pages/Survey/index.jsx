@@ -1,4 +1,4 @@
-import { useContext, useEffect} from "react";
+import { useContext} from "react";
 import { SurveyContext } from "../../utils/context";
 import { useFetch } from "../../utils/hooks";
 import { Link, useParams } from "react-router-dom";
@@ -63,15 +63,6 @@ function Survey(){
     const prevQuestionNumber = questionNumberInt === 1 ? 1 : questionNumberInt - 1;
     const nextQuestionNumber = questionNumberInt + 1;
    
-    // useEffect(() => {
-    //     setDataLoading(true);
-    //     fetch('http://localhost:8000/survey')
-    //     .then((response) => response.json()
-    //     .then(({surveyData}) => {setSurveyData(surveyData)
-    //       setDataLoading(false);
-    //     })
-    // )
-    // },[]) 
 
     function saveReply(answer){
       saveAnswer({ [questionNumber]: answer })
@@ -93,23 +84,23 @@ function Survey(){
                   {surveyData && surveyData[questionNumber]}
               </QuestionContent>)
             }
-            <ReplyWrapper>
-                <ReplyBox 
-                  onClick={() => saveReply(true)}
-                  isSelected={answers[questionNumber] === true}
-                  >Oui
-                </ReplyBox>
-                <ReplyBox 
-                  onClick={() => saveReply(false)}
-                  isSelected={answers[questionNumber] === false}
-                  >Non
-                </ReplyBox>
-            </ReplyWrapper>
-           
+                <ReplyWrapper>
+                    <ReplyBox 
+                      onClick={() => saveReply(true)}
+                      isSelected={answers[questionNumber] === true}
+                      >Oui
+                    </ReplyBox>
+                    <ReplyBox 
+                      onClick={() => saveReply(false)}
+                      isSelected={answers[questionNumber] === false}
+                      >Non
+                    </ReplyBox>
+                </ReplyWrapper>
+              
                 <LinkWrapper>
                     <Link to={`/survey/${prevQuestionNumber}`}>Precedent</Link>
                     {
-                        surveyData[questionNumberInt + 1]  ? (
+                       surveyData && surveyData[questionNumberInt + 1]  ? (
                             <Link to={`/survey/${nextQuestionNumber}`}>Suivant</Link>
                         ):(
                             <Link to="/results">Results</Link>
