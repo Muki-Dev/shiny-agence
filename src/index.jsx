@@ -10,7 +10,7 @@ import Results from './pages/Results';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyle from './utils/style/GlobalStyle';
-import { ThemeProvider } from './utils/context';
+import { SurveyProvider, ThemeProvider } from './utils/context';
 import Footer from './components/Footer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -18,6 +18,7 @@ root.render(
   <React.StrictMode>
     <Router>
       <ThemeProvider>
+        <SurveyProvider>
       <GlobalStyle />
       <Header />
       <Routes>
@@ -28,6 +29,7 @@ root.render(
           <Route path='*' element={<Error />} />
       </Routes>
       <Footer />
+      </SurveyProvider>
       </ThemeProvider>
     </Router>
   </React.StrictMode>
