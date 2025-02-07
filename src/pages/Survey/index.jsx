@@ -1,5 +1,6 @@
-import { useContext, useEffect,useState } from "react";
+import { useContext, useEffect} from "react";
 import { SurveyContext } from "../../utils/context";
+import { useFetch } from "../../utils/hooks";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
@@ -57,9 +58,6 @@ const ReplyWrapper = styled.div`
 
 function Survey(){
     const { answers, saveAnswer } = useContext(SurveyContext)
-    const [surveyData,setSurveyData] = useState({});
-    const [isDataLoading,setDataLoading] = useState(false);
-    const [error,setError] = useState(false);
     const { questionNumber } = useParams();
     const questionNumberInt = parseInt(questionNumber);
     const prevQuestionNumber = questionNumberInt === 1 ? 1 : questionNumberInt - 1;
@@ -78,33 +76,22 @@ function Survey(){
     function saveReply(answer){
       saveAnswer({ [questionNumber]: answer })
     }
-
-    useEffect(() => {
-        async function fetchSurvey(){
-           setDataLoading(true);
-          try{
-            const response = await  fetch('http://localhost:8000/survey');
-            const { surveyData } = await response.json();
-            setSurveyData(surveyData)
-          }catch(err){
-            console.log('===== error =====', err)
-            setError(true)
-          }finally{
-            setDataLoading(false)
-          }
-         
-        }
-        fetchSurvey()
-    },[])
-
-    if(error){
-      return <span>Oups il y a eu un problème</span>
+    const { data, isLoading, error } = useFetch(`http://localhost:8000/survey`)
+    const { surveyData } = data
+  
+    if (error) {
+      return <span>Il y a un problème</span>
     }
+  
     return(
         <SurveyContainer>
             <QuestionTitle>Question { questionNumber }</QuestionTitle>
             {
-              isDataLoading ? (<Loader />) :(<QuestionContent>{surveyData[questionNumber]}</QuestionContent>)
+              isLoading ? 
+              (<Loader />) :
+              (<QuestionContent>
+                  {surveyData && surveyData[questionNumber]}
+              </QuestionContent>)
             }
             <ReplyWrapper>
                 <ReplyBox 
