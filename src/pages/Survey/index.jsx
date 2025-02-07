@@ -1,4 +1,5 @@
-import { useEffect,useState } from "react";
+import { useContext, useEffect,useState } from "react";
+import { SurveyContext } from "../../utils/context";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../../utils/style/colors";
@@ -29,7 +30,33 @@ const LinkWrapper = styled.div`
   }
 `
 
+const ReplyBox = styled.button`
+  border: none;
+  height: 100px;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${colors.backgroundLight};
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: ${(props) =>
+    props.isSelected ? `0px 0px 0px 2px ${colors.primary} inset` : 'none'};
+  &:first-child {
+    margin-right: 15px;
+  }
+  &:last-of-type {
+    margin-left: 15px;
+  }
+`
+
+const ReplyWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
 function Survey(){
+    const { answers, saveAnswer } = useContext(SurveyContext)
     const [surveyData,setSurveyData] = useState({});
     const [isDataLoading,setDataLoading] = useState(false);
     const [error,setError] = useState(false);
@@ -47,6 +74,10 @@ function Survey(){
     //     })
     // )
     // },[]) 
+
+    function saveReply(answer){
+      saveAnswer({ [questionNumber]: answer })
+    }
 
     useEffect(() => {
         async function fetchSurvey(){
@@ -75,6 +106,18 @@ function Survey(){
             {
               isDataLoading ? (<Loader />) :(<QuestionContent>{surveyData[questionNumber]}</QuestionContent>)
             }
+            <ReplyWrapper>
+                <ReplyBox 
+                  onClick={() => saveReply(true)}
+                  isSelected={answers[questionNumber] === true}
+                  >Oui
+                </ReplyBox>
+                <ReplyBox 
+                  onClick={() => saveReply(false)}
+                  isSelected={answers[questionNumber] === false}
+                  >Non
+                </ReplyBox>
+            </ReplyWrapper>
            
                 <LinkWrapper>
                     <Link to={`/survey/${prevQuestionNumber}`}>Precedent</Link>
