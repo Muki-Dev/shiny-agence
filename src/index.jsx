@@ -5,7 +5,7 @@ import Header from './components/Header';
 import Error from './components/Error';
 import Home from './pages/Home';
 import Survey from './pages/Survey';
-import Freelance from './pages/Freelance';
+import Freelances from './pages/Freelance';
 import Results from './pages/Results';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
@@ -24,7 +24,7 @@ root.render(
       <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/survey/:questionNumber" element={<Survey />}/>
-          <Route path="/freelances" element={<Freelance />}/>
+          <Route path="/freelances" element={<Freelances />}/>
           <Route path="/results" element={<Results />}/>
           <Route path='*' element={<Error />} />
       </Routes>
